@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DOCUMENTATIONs"""
+"""DOCUMENTATIONs for module"""
 
 import re
 import typing
@@ -9,7 +9,7 @@ import logging
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """Hide infos"""
+    """use a regex to replace occurrences"""
     for field in fields:
         message = re.sub(f'{field}=(.*?){separator}',
                          f'{field}={redaction}{separator}', message)
@@ -23,8 +23,13 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self):
+    def __init__(self, fields: List[str]):
+        """Cinstructor for """
         super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        NotImplementedError
+        """method to filter values in incoming log records"""
+        res = filter_datum(self.fields, self.REDACTION,
+                           super().format(record), self.SEPARATOR)
+        return res
