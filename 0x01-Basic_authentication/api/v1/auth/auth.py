@@ -13,7 +13,6 @@ class Auth():
         """ Documentation for method """
         return None
 
-
     def current_user(self, request=None) -> TypeVar('User'):
         """ Documentation for method """
         return None
