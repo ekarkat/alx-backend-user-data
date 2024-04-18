@@ -41,10 +41,9 @@ def before_request_func():
         abort(401)
     if auth.current_user(request) is None:
         abort(403)
-    if auth.require_auth(request.path, excluded_paths):
-        if not auth.authorization_header(request) \
-           and not auth.session_cookie(request):
-            abort(401)
+    if not auth.authorization_header(request) \
+       and not auth.session_cookie(request):
+        abort(401)
 
 
 @app.errorhandler(404)
