@@ -43,7 +43,7 @@ def before_request_func():
         abort(403)
     if not auth.authorization_header(request) \
        and not auth.session_cookie(request):
-        abort(403)
+        abort(401)
 
 
 @app.errorhandler(404)
