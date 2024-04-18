@@ -32,12 +32,17 @@ def before_request_func():
         return
     request.current_user = auth.current_user(request)
     exclusive = ['/api/v1/status/',
-                 '/api/v1/unauthorized/', '/api/v1/forbidden/']
+                 '/api/v1/unauthorized/',
+                 '/api/v1/forbidden/',
+                 '/api/v1/auth_session/login/']
     if not auth.require_auth(request.path, exclusive):
         return
     if auth.authorization_header(request) is None:
         abort(401)
     if auth.current_user(request) is None:
+        abort(403)
+    if not auth.authorization_header(request) \
+       and not auth.session_cookie(request):
         abort(403)
 
 

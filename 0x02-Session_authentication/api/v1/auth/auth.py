@@ -31,5 +31,5 @@ class Auth():
         """ Return session cockies """
         if not request:
             return None
-        cockie_name  = os.getenv('SESSION_NAME', "_my_session_id")
+        cockie_name = os.getenv('SESSION_NAME', "_my_session_id")
         return request.cookies.get(cockie_name)
