@@ -16,8 +16,8 @@ class User():
     """ The user class"""
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(250))
-    hashed_password: Mapped[str] = mapped_column(String(250))
-    session_id: Mapped[str] = mapped_column(String(250))
-    reset_token: Mapped[str] = mapped_column(String(250))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(250), nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String(250), nullable=True)
+    session_id: Mapped[str] = mapped_column(String(250), nullable=True)
+    reset_token: Mapped[str] = mapped_column(String(250), nullable=True)

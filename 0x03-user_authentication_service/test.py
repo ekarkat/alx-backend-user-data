@@ -1,15 +1,10 @@
+#!/usr/bin/env python3
+"""
+Main file
+"""
+from user import User
 
-lis = [1, 2, 3]
+print(User.__tablename__)
 
-stri = 'abcd'
-num = 16
-
-def numb(num):
-    num = 15
-
-
-print(num)
-
-numb(num)
-
-print(num)
+for column in User.__table__.columns:
+    print("{}: {}".format(column, column.type))
