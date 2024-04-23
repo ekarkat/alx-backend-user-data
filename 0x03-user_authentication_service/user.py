@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ The User module """
 
 from sqlalchemy import Integer, String, ForeignKey
