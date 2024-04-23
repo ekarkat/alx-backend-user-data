@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """ The User module """
 
-""" The User module """
-
 from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
