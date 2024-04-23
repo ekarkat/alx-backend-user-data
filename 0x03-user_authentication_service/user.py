@@ -1,19 +1,25 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ The User module """
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+""" The User module """
+
+from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import registry
 
 
-Base = declarative_base()
+mapper_registry = registry()
 
 
-class User(Base):
+@mapper_registry.mapped
+class User():
     """ The user class"""
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
-    email = Column(String(250), nullable=False)
-    hashed_password = Column(String(250), nullable=False)
-    session_id = Column(String(250), nullable=True)
-    reset_token = Column(String(250), nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(250), nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String(250), nullable=True)
+    session_id: Mapped[str] = mapped_column(String(250), nullable=True)
+    reset_token: Mapped[str] = mapped_column(String(250), nullable=True)
