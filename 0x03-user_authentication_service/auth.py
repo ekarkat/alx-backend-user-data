@@ -75,5 +75,5 @@ class Auth:
         """Rest password tokker"""
         try:
             user = self._db.find_user_by(email=email)
-        except NoResultFound:
+        except Exception:
             raise ValueError
