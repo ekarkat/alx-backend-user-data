@@ -44,3 +44,13 @@ class Auth:
             return bcrypt.checkpw(password.encode(), user.hashed_password)
         except Exception:
             return False
+
+    def create_session(self, email: str) -> str:
+        """ Generate a session id """
+        try:
+            user = self._db.find_user_by(email=email)
+            ses_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=ses_id)
+            return ses_id
+        except Exception:
+            return None
