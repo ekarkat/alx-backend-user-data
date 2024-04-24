@@ -28,31 +28,29 @@ def users() -> str:
         return jsonify({"message": "email already registered"}), 400
 
 
-@app.route('/sessions', methods=['POST', 'DELETE'], strict_slashes=False)
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login():
     """Session login route"""
-    if request.method == 'POST':
-        email = request.form.get('email')
-        pwd = request.form.get('password')
-        if AUTH.valid_login(email, pwd):
-            response = make_response(jsonify({"email": email,
-                                              "message": "logged in"}))
-            response.set_cookie('session_id', AUTH.create_session(email))
-            return response
-        else:
-            abort(401)
+    email = request.form.get('email')
+    pwd = request.form.get('password')
+    if AUTH.valid_login(email, pwd):
+        response = make_response(jsonify({"email": email,
+                                            "message": "logged in"}))
+        response.set_cookie('session_id', AUTH.create_session(email))
+        return response
+    else:
+        abort(401)
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     """Session login route"""
-    if request.method == 'DELETE':
-        user_cookie = request.cookies.get("session_id")
-        user = AUTH.get_user_from_session_id(user_cookie)
-        if user_cookie is None or user is None:
-            abort(403)
-        AUTH.destroy_session(user.id)
-        return redirect('/')
+    user_cookie = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(user_cookie)
+    if user_cookie is None or user is None:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect('/')
 
 
 if __name__ == "__main__":
