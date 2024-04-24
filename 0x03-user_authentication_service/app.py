@@ -41,6 +41,11 @@ def login():
             return response
         else:
             abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Session login route"""
     if request.method == 'DELETE':
         user_cookie = request.cookies.get("session_id")
         user = AUTH.get_user_from_session_id(user_cookie)
