@@ -70,3 +70,10 @@ class Auth:
             self._db.update_user(user.id, session_id=None)
         except Exception:
             return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        """Rest password tokker"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError
