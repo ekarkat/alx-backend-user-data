@@ -43,7 +43,7 @@ def login():
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
-def logout():
+def logout() -> str:
     """Logout route"""
     user_cookie = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(user_cookie)
@@ -51,6 +51,17 @@ def logout():
         AUTH.destroy_session(user.id)
         return redirect("/")
     abort(403)
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token_route() -> str:
+    """reset pwd route"""
+    email = request.form.get('email')
+    if AUTH.create_session(email):
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": token})
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
